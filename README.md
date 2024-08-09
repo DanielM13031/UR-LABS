@@ -7,5 +7,5 @@ A repository for CompoVault project , a electronic components organizer for Univ
 - Daniel Morales
 - David Gil
 
-Applied Mathematics & Computer Science 2024
-Electronic engineering
+Applied Mathematics & Computer Science 2024,
+Electronic Engineering
