@@ -1,7 +1,7 @@
 {
   "name": "labs-ur",
   "version": "1.0.0",
-  "type": "module",   
+  "type": "module",
   "description": "A repository for CompoVault project , a electronic components organizer for Universidad del rosario´s labs",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,10 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "pg": "^8.13.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.4"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
