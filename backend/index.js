@@ -12,7 +12,7 @@ const port  = 5000;
 app.use(express.json());
 app.use(cors());
 
-//Conecciones de la base de datos
+//Conexiones de la base de datos
 
 Sequelize.sync({alter:true})
 .then(()=>{
@@ -24,7 +24,7 @@ Sequelize.sync({alter:true})
 
 //peticiones para el login
 
-app.post('/login',async (req,res) => {
+app.post('/Login',async (req,res) => {
     const {mail, password} = req.body;
 
     try {
@@ -70,7 +70,7 @@ function checktoken (req,res,next){
 }
 
 
-app.get('/home', checktoken, (req,res)=>{
+app.get('/Home', checktoken, (req,res)=>{
     res.json({message: 'Ha ingresado'})
 });
 

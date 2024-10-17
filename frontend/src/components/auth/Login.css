@@ -1,0 +1,27 @@
+#background{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../../assets/images/img_3.png'); /*imagen por definir*/
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    align-items: center;
+    justify-content: center;
+}
+
+#back_form{
+    display: flex;
+    width:  60vw;
+    height: 80vh;
+    background-color: rgb(170, 26, 26,0.9);
+    border-radius: 50px;
+    align-items: top;
+    justify-content: center;
+}
+
+#back_form img{
+    margin-top: 20px;
+    width: 33vh;
+    height: 38vh;
+}
