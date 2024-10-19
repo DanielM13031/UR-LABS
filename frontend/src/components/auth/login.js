@@ -1,9 +1,7 @@
 import './Login.css';
-import axios from 'axios';
+import axios from './axiosconfig';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom'
-
-
 
 function Login() {
 //Funciones para el manejo de datos
@@ -20,15 +18,13 @@ function Login() {
             const response = await axios.post('/Login', user);
 
             const token = response.data.token;
-            localStorage.getItem('token', token);
+            localStorage.setItem('token', token);
 
             alert(response.data.message);
             navigate('/Home');
         }catch(err){
             if (err.response){
-                if (err.response.status === 401){
-                    alert('Usuario o contrasela incorrectas')
-                }else if(err.response.status === 500){
+                if(err.response.status === 500){
                     alert('Error en el servidor')
                 }else(alert(`${err.response.status}`))
             }else if(err.request){
@@ -38,6 +34,9 @@ function Login() {
             }
         }
     };
+
+
+
 
     //html para el UI
     return(
