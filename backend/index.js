@@ -34,7 +34,7 @@ app.post('/Login',async (req,res) => {
             return res.status(401).json({message: 'Usuario no encontrado'})
         }
 
-        const isMatch = await bcrypt.compare(password, user.password); //comparacion de la contrasela con la contraseña encryptada
+        const isMatch = await bcrypt.compare(password, user.password); //comparacion de la contraseña con la contraseña encryptada
 
         if(isMatch){
             const payload = {
@@ -44,7 +44,7 @@ app.post('/Login',async (req,res) => {
 
             return res.json({message: 'inicio correcto', token})
         }else{
-            res.status(401).json({message: 'contrasela invalida'})
+            res.status(401).json({message: 'contraseña invalida'})
         }
     }catch(error){
         res.status(500).json({message: 'error en el servidor'})
