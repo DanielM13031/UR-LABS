@@ -43,29 +43,31 @@ function Login() {
         <div id="background">
             <div id="back_form">
                 <img src={require('../../assets/images/logo_footer.png')} alt="Logo Urosario"/>
-                <form onSubmit={handleSubmit}>
-                <label htmlFor ='mail'>Correo institucional:</label><br />
-                <input 
-                    type='text' 
-                    id='mail' 
-                    name='mail' 
-                    value={user.mail} 
-                    onChange={handleChange} 
-                    required
-                /><br /><br />
+                <div id='div_form'>
+                    <form onSubmit={handleSubmit}>
+                    <label htmlFor ='mail'>Correo institucional:</label><br />
+                    <input 
+                        type='text' 
+                        id='mail' 
+                        name='mail' 
+                        value={user.mail} 
+                        onChange={handleChange} 
+                        required
+                    /><br /><br />
 
-                <label htmlFor='password'>Contraseña:</label><br />
-                <input 
-                    type='password' 
-                    id='password' 
-                    name='password' 
-                    value={user.password} 
-                    onChange={handleChange} 
-                    required
-                /><br /><br />
+                    <label htmlFor='password'>Contraseña:</label><br />
+                    <input 
+                        type='password' 
+                        id='password' 
+                        name='password' 
+                        value={user.password} 
+                        onChange={handleChange} 
+                        required
+                    /><br /><br />
 
-                <input type='submit' value='Iniciar Sesion'/>
-                </form>
+                    <input type='submit' value='Iniciar Sesion'/>
+                    </form>
+                </div>
             </div>
         </div>
     );
