@@ -1,8 +1,22 @@
 import './Home.css';
+import React, {useEffect, useState} from 'react';
 
-function Home() {
+const Home = () => {
+    const [profileimg, setProfileimg] = useState('');
+    useEffect(() => {
+
+        const imgUrl = localStorage.getItem('img_ref');
+        if(imgUrl){
+            setProfileimg(imgUrl);
+        }
+    }, []);
+
     return(
-        <h1>Holaaaaaaaa</h1>
+        <div id ='background_home'>
+            <div id = 'u_barra'>
+
+            </div>
+        </div>
     );
 }
 

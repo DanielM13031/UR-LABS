@@ -1,0 +1,15 @@
+#background_home{
+    width: 100vw;
+    height: 100vh;
+    background-color: #b9b5b5;
+    padding: 30px;
+}
+
+#u_barra{
+    background-color: rgb(185, 31, 31);
+    width: 15vw;
+    height: 93vh;
+    border-radius: 30px;
+    margin-top: -10px;
+    margin-left: -7px;
+}

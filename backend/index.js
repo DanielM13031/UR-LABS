@@ -40,9 +40,13 @@ app.post('/Login',async (req,res) => {
             const payload = {
                 id : user.mail
             };
-            const token = jwt.sign(payload, '13031', { expiresIn: '1h' })
+            const token = jwt.sign(payload, '13031', { expiresIn: '1h' }) 
 
-            return res.json({message: 'inicio correcto', token})
+            const mail_norm = mail.replace(/[@.]/g, '_');
+            
+            const img_ref = `http://localhost:3000/images/${mail_norm}.jpg`
+
+            return res.json({message: 'inicio correcto', token, img_ref})
         }else{
             res.status(401).json({message: 'contraseña invalida'})
         }

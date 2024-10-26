@@ -19,6 +19,8 @@ function Login() {
 
             const token = response.data.token;
             localStorage.setItem('token', token);
+            const img_ref = response.data.img_ref;
+            localStorage.setItem('img_ref', img_ref)
 
             alert(response.data.message);
             navigate('/Home');
