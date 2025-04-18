@@ -21,6 +21,8 @@ function Login() {
             localStorage.setItem('token', token);
             const img_ref = response.data.img_ref;
             localStorage.setItem('img_ref', img_ref)
+            const mail = response.data.mail;
+            localStorage.setItem('user_mail', mail);
 
             alert(response.data.message);
             navigate('/Home');

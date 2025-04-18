@@ -1,15 +1,86 @@
-#background_home{
+#background_home {
     width: 100vw;
     height: 100vh;
     background-color: #b9b5b5;
-    padding: 30px;
+    display: flex;
+    overflow: hidden; /* Previene cualquier desborde visual */
 }
 
-#u_barra{
-    background-color: rgb(185, 31, 31);
-    width: 15vw;
-    height: 93vh;
+#u_barra {
+    background-color: #990000;
+    width: 220px;
+    height: 100%; /* 🔧 Usa 100% en lugar de 93vh */
     border-radius: 30px;
-    margin-top: -10px;
-    margin-left: -7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.profile-section {
+    text-align: center;
+    margin-top: 15px;
+    padding: 0 12px;
+}
+
+.profile-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #5f0f0f;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+    margin-bottom: 8px;
+}
+
+.user-mail {
+    color: black;
+    font-size: 0.85rem;
+    font-weight: bold;
+    word-break: break-word;
+    line-height: 1.2;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+.menu-section {
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.menu-button {
+    background-color: #800000;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.menu-button:hover {
+    background-color: #a00000;
+    transform: scale(1.03);
+}
+
+.menu-item {
+    color: black;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.footer-section {
+    padding-bottom: 15px;
+}
+
+.footer-logo {
+    width: 45px;
+    height: auto;
+    opacity: 0.95;
 }

@@ -46,7 +46,7 @@ app.post('/Login',async (req,res) => {
             
             const img_ref = `http://localhost:3000/images/${mail_norm}.jpg`
 
-            return res.json({message: 'inicio correcto', token, img_ref})
+            return res.json({message: 'inicio correcto', token, img_ref, mail})
         }else{
             res.status(401).json({message: 'contraseña invalida'})
         }
