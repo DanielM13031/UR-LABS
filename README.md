@@ -5,8 +5,7 @@ A repository for Web Page of electronic components organizer for Universidad del
 ### _WORKTEAM:_
 
 - Daniel Morales
-- David Gil
 
 Applied Mathematics & Computer Science,
 Electronic Engineering
-2024
+2024-2025
