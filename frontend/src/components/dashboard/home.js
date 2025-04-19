@@ -1,9 +1,11 @@
 import './Home.css';
 import React, {useEffect, useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
     const [profileimg, setProfileimg] = useState('');
     const [userMail, setUserMail] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -20,6 +22,11 @@ const Home = () => {
 
     }, []);
 
+
+const goToHome = () => {
+    navigate('/home');
+}
+
     return(
         <div id="background_home">
         <div id="u_barra">
@@ -29,7 +36,7 @@ const Home = () => {
         </div>
 
         <div className="menu-section">
-            <button className="menu-button">PAG. PRINCIPAL</button>
+            <button className="menu-button" onClick={goToHome}>PAG. PRINCIPAL</button>
         </div>
 
         <div className="footer-section">

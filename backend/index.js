@@ -2,8 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import Sequelize from './config/database.js';
 import users from './models/users.js'
+import lockers from './models/lockers.js';
+import reservations from './models/reservas.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
+import { json } from 'sequelize';
 
 const app = express();
 const port  = 5000;
@@ -54,6 +57,50 @@ app.post('/Login',async (req,res) => {
         res.status(500).json({message: 'error en el servidor'})
     }
                 });
+
+// peticiones para las reservas
+
+app.get('/lockers', async (req, res) =>{
+    try{
+        const casilleros = await lockers.findAll({
+            attributes: ['id', 'numero', 'isAvailable'],
+            order: [['id', 'ASC']]
+        });
+        res.json(casilleros);
+    } catch(err){
+        console.error('Error al obtener los casilleros', err);
+        res.status(500).json({ message: 'Error  al obtener los casilleros'})
+    }
+})
+
+app.post('/reserve', async (req, res) => {
+    const { lockerId, userMail, startTime, endTime } = req.body;
+    try {
+        const locker = await lockers.findByPk(lockerId);
+        if (!locker || !locker.isAvailable) {
+        return res.status(400).json({ message: 'El casillero no está disponible o no existe.' });
+    }
+
+    const nuevaReserva = await reservations.create({
+        lockerId,
+        userMail,
+        startTime,
+        endTime
+    });
+
+    locker.isAvailable = false;
+    await locker.save();
+
+    return res.status(201).json({
+        message: 'Reserva registrada correctamente',
+        reserva: nuevaReserva
+    });
+    } catch (error) {
+        console.error('Error al registrar la reserva:', error);
+        res.status(500).json({ message: 'Error al registrar la reserva' });
+    }
+});
+
 
 //middleware para el token de login
 
