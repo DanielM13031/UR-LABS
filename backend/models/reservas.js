@@ -23,10 +23,6 @@ userMail: {
 startTime: {
     type: Sequelize.DATE,
     allowNull: false
-},
-endTime: {
-    type: Sequelize.DATE,
-    allowNull: false
 }
 }, {
     tableName: 'reservations',

@@ -27,6 +27,10 @@ const goToHome = () => {
     navigate('/home');
 }
 
+const goToReser = () => {
+    navigate('/reservas');
+}
+
     return(
         <div id="background_home">
         <div id="u_barra">
@@ -37,6 +41,7 @@ const goToHome = () => {
 
         <div className="menu-section">
             <button className="menu-button" onClick={goToHome}>PAG. PRINCIPAL</button>
+            <button className="reser-button" onClick={goToReser}>Reser. casilleros</button>
         </div>
 
         <div className="footer-section">

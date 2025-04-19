@@ -74,7 +74,7 @@ app.get('/lockers', async (req, res) =>{
 })
 
 app.post('/reserve', async (req, res) => {
-    const { lockerId, userMail, startTime, endTime } = req.body;
+    const { lockerId, userMail, startTime} = req.body;
     try {
         const locker = await lockers.findByPk(lockerId);
         if (!locker || !locker.isAvailable) {
@@ -84,8 +84,7 @@ app.post('/reserve', async (req, res) => {
     const nuevaReserva = await reservations.create({
         lockerId,
         userMail,
-        startTime,
-        endTime
+        startTime
     });
 
     locker.isAvailable = false;

@@ -1,0 +1,64 @@
+.reservas-container {
+    padding: 30px;
+}
+
+.formulario {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 320px;
+}
+
+.formulario input {
+    padding: 8px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+}
+
+.locker-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 70px);
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.locker-btn {
+    height: 70px;
+    width: 70px;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 10px;
+    border: 2px solid #555;
+    color: white;
+    cursor: pointer;
+}
+
+.disponible {
+    background-color: #66bb6a;
+}
+
+.seleccionado {
+    background-color: #FFD700;
+    color: black;
+}
+
+.ocupado {
+    background-color: #888;
+    cursor: not-allowed;
+}
+
+.btn-reservar {
+    padding: 12px 24px;
+    background-color: #800000;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-reservar:hover {
+    background-color: #a00000;
+}
