@@ -6,7 +6,6 @@ import lockers from './models/lockers.js';
 import reservations from './models/reservas.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
-import { json } from 'sequelize';
 
 const app = express();
 const port  = 5000;
@@ -76,6 +75,12 @@ app.get('/lockers', async (req, res) =>{
 app.post('/reserve', async (req, res) => {
     const { lockerId, userMail, startTime} = req.body;
     try {
+
+        const reservaActiva = await reservations.findOne({ where: {userMail} });
+        if(reservaActiva) {
+            return res.status(400).json({ message: 'El usuario ya tiene una reserva'})
+        }
+
         const locker = await lockers.findByPk(lockerId);
         if (!locker || !locker.isAvailable) {
         return res.status(400).json({ message: 'El casillero no está disponible o no existe.' });
