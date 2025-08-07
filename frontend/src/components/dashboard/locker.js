@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../auth/axiosconfig';
+import { useNavigate } from 'react-router-dom';
 import './locker.css';
 
 const Reservas = () => {
@@ -7,6 +8,7 @@ const Reservas = () => {
     const [selectedLocker, setSelectedLocker] = useState(null);
     const [userMail, setUserMail] = useState('');
     const [startTime, setStartTime] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchLockers = async () =>{
@@ -46,6 +48,10 @@ const Reservas = () => {
             alert('Error al reservar');
         }
     };
+
+const goToDelete = () => {
+    navigate('/reservasd');
+}
 
     return (
         <div className="reservas-container">
@@ -92,6 +98,9 @@ const Reservas = () => {
                 Confirmar Reserva
             </button>
             )}
+            <button className="btn-reservar" onClick={goToDelete}>
+                Eliminar reservas
+            </button>
         </div>
         );
 
