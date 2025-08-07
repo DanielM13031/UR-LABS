@@ -106,6 +106,68 @@ app.post('/reserve', async (req, res) => {
 });
 
 
+app.delete('/reservations/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const reserva = await reservations.findByPk(id);
+        if (!reserva) {
+            return res.status(404).json({ message: 'Reserva no encontrada' });
+        }
+
+        const locker = await lockers.findByPk(reserva.lockerId);
+        if (locker) {
+            locker.isAvailable = true;
+            await locker.save();
+        }
+
+        await reserva.destroy();
+        return res.json({ message: 'Reserva cancelada correctamente' });
+    } catch (error) {
+        console.error('Error al cancelar la reserva:', error);
+        res.status(500).json({ message: 'Error al cancelar la reserva' });
+    }
+});
+
+
+app.get('/reservas', async (req, res) => {
+    try {
+        const reservas = await reservations.findAll({
+            include: [{
+                model: lockers,
+                attributes: ['numero']
+            }],
+            order: [['startTime', 'DESC']]
+        });
+        res.json(reservas);
+    } catch (error) {
+        console.error('Error al obtener las reservas:', error);
+        res.status(500).json({ message: 'Error al obtener las reservas' });
+    }
+});
+
+app.delete('/reservas/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const reserva = await reservations.findByPk(id);
+        if (!reserva) {
+            return res.status(404).json({ message: 'Reserva no encontrada' });
+        }
+
+        const locker = await lockers.findByPk(reserva.lockerId);
+        if (locker) {
+            locker.isAvailable = true;
+            await locker.save();
+        }
+
+        await reserva.destroy();
+        return res.json({ message: 'Reserva cancelada correctamente' });
+    } catch (error) {
+        console.error('Error al cancelar la reserva:', error);
+        res.status(500).json({ message: 'Error al cancelar la reserva' });
+    }
+});
+
+
 //middleware para el token de login
 
 function checktoken (req,res,next){
