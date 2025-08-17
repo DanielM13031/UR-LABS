@@ -6,14 +6,16 @@ import lockers from './models/lockers.js';
 import reservations from './models/reservas.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
+import lockersRouter from './routes/lockers.js';
 
 const app = express();
 const port  = 5000;
 
 
+
 app.use(express.json());
 app.use(cors());
-
+app.use('/lockers', lockersRouter);
 //Conexiones de la base de datos
 
 Sequelize.sync({alter:true})
@@ -59,18 +61,32 @@ app.post('/Login',async (req,res) => {
 
 // peticiones para las reservas
 
-app.get('/lockers', async (req, res) =>{
-    try{
-        const casilleros = await lockers.findAll({
-            attributes: ['id', 'numero', 'isAvailable'],
-            order: [['id', 'ASC']]
+app.get('/lockers', async (req, res) => {
+    try {
+        const { edificio, piso } = req.query;
+        const where = {};
+        if (edificio) where.edificio = edificio;
+        if (piso !== undefined && piso !== '') where.piso = Number(piso);
+
+        const rows = await lockers.findAll({
+            where,
+            attributes: ['id', 'numero', 'isAvailable', 'edificio', 'piso'],
+            order: [['numero', 'ASC']]
         });
-        res.json(casilleros);
-    } catch(err){
-        console.error('Error al obtener los casilleros', err);
-        res.status(500).json({ message: 'Error  al obtener los casilleros'})
+
+        const data = rows.map(r => {
+            const j = r.toJSON();
+            j.isAvailable = !!j.isAvailable; // normaliza booleano
+            return j;
+        });
+
+        res.json(data);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ message: 'Error listando lockers' });
     }
-})
+});
+
 
 app.post('/reserve', async (req, res) => {
     const { lockerId, userMail, startTime} = req.body;
