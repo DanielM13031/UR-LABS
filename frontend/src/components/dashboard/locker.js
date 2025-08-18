@@ -100,7 +100,7 @@ const asBool = (v) => {
 
 return (
     <div className="reservas-container">
-        <h2>Reservar casillero para un usuario</h2>
+        <h2>Reserva de Casilleros</h2>
 
       {/* Filtros */}
         <div className="filtros">

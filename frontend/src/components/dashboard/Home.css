@@ -1,105 +1,129 @@
-#background_home {
-    width: 100vw;
-    height: 100vh;
-    background-color: #b9b5b5;
-    display: flex;
-    overflow: hidden; /* Previene cualquier desborde visual */
+/* ====== THEME ====== */
+:root{
+    --ur-red: #990000;
+    --ur-red-700:#b01820;
+    --ink:#0f172a;
+    --bg:#e9eaee;
+    --panel:#0b0e14;
+    --text:#f8fafc;
+    --muted:#cbd5e1;
+    --radius:22px;
+    --shadow: 0 12px 40px rgba(0,0,0,.25);
+    --blur: 16px;
 }
 
-#u_barra {
-    background-color: #990000;
-    width: 220px;
-    height: 100%; /* 🔧 Usa 100% en lugar de 93vh */
-    border-radius: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2);
+/* Soporte dark mode del SO */
+@media (prefers-color-scheme: dark){
+    :root{ --bg:#0c1017; --muted:#94a3b8; }
 }
 
-.profile-section {
-    text-align: center;
-    margin-top: 15px;
-    padding: 0 12px;
+/* ====== LAYOUT ====== */
+#background_home{
+    width:100vw;height:100vh;display:flex;overflow:hidden;
+    background:
+    radial-gradient(1200px 800px at 0% 0%, rgba(153,0,0,.20), transparent 60%),
+    radial-gradient(900px 700px at 100% 100%, rgba(176,24,32,.18), transparent 55%),
+    var(--bg);
+    font-family: Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif;
+    color:var(--ink);
 }
 
-.profile-img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #5f0f0f;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
-    margin-bottom: 8px;
+/* ====== SIDEBAR (glass) ====== */
+#u_barra{
+    position:relative; z-index:2;
+    width:260px; height:100%;
+    display:flex; flex-direction:column; align-items:center; justify-content:space-between;
+    padding:14px 12px;
+    border-radius:0 var(--radius) var(--radius) 0;
+    background: linear-gradient(180deg, rgba(153,0,0,.88), rgba(125,15,21,.88));
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+    box-shadow: var(--shadow);
+    border-right:1px solid rgba(255,255,255,.12); 
 }
 
-.user-mail {
-    color: black;
-    font-size: 0.85rem;
-    font-weight: bold;
-    word-break: break-word;
-    line-height: 1.2;
-    max-width: 90%;
-    margin: 0 auto;
+/* Toggle para móviles (opcional, agregar un botón con .sidebar-toggle) */
+.sidebar-toggle{
+    position:absolute; top:14px; right:-14px; width:36px; height:36px; border-radius:10px;
+    background: rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.2);
+    display:grid; place-items:center; cursor:pointer; transition: transform .2s ease, background .2s;
+}
+.sidebar-toggle:hover{ transform:translateY(-1px); background: rgba(255,255,255,.18); }
+
+/* ====== PERFIL ====== */
+.profile-section{ text-align:center; padding:8px 10px; margin-top:6px; }
+.profile-img{
+    width:92px;height:92px;border-radius:50%;object-fit:cover;
+    border:3px solid rgba(255,255,255,.35);
+    box-shadow:0 8px 22px rgba(0,0,0,.4); margin:8px auto 10px;
+}
+.user-mail{
+    color:#fff; font-size:.86rem; font-weight:600; line-height:1.25;
+    opacity:.95; max-width:92%; margin:0 auto; word-break:break-word;
 }
 
-.menu-section {
-    width: 100%;
-    text-align: center;
-    padding: 20px 0;
+/* ====== MENÚ ====== */
+.menu-section{
+    width:100%; padding:18px 8px; display:flex; flex-direction:column; gap:10px;
+}
+.menu-button, .reser-button{
+    --bg-btn: rgba(255,255,255,.10);
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    padding:12px 16px; height:44px; border-radius:14px; border:1px solid rgba(255,255,255,.18);
+    background: var(--bg-btn); color:#fff; font-weight:700; letter-spacing:.2px;
+    cursor:pointer; transition: transform .06s ease, box-shadow .25s ease, background .25s ease;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+.menu-button:hover, .reser-button:hover{ background: rgba(255,255,255,.16); transform: translateY(-1px); }
+.menu-button:active, .reser-button:active{ transform: translateY(0); }
+
+.menu-item{ color:#fff; font-weight:700; font-size:.98rem; margin:0; letter-spacing:.25px; }
+
+/* Estado activo del botón (añade .is-active a la opción actual) */
+.menu-button.is-active{
+    background: linear-gradient(180deg, rgba(255,255,255,.20), rgba(255,255,255,.10));
+    border-color: rgba(255,255,255,.35);
+    box-shadow:0 12px 26px rgba(176,24,32,.35), inset 0 0 0 1px rgba(255,255,255,.06);
 }
 
-.menu-button {
-    background-color: #800000;
-    color: white;
-    font-weight: bold;
-    font-size: 1rem;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+/* Botón especial (reservas) */
+.reser-button{
+    --bg-btn: linear-gradient(180deg, rgba(153,0,0,.85), rgba(176,24,32,.85));
+    border-color: rgba(255,255,255,.22);
+    box-shadow:0 14px 30px rgba(153,0,0,.40);
+}
+.reser-button:hover{ background: linear-gradient(180deg, rgba(176,24,32,.90), rgba(153,0,0,.90)); }
+
+/* ====== FOOTER ====== */
+.footer-section{ padding:10px 0 16px }
+.footer-logo{ width:46px; filter: drop-shadow(0 4px 12px rgba(0,0,0,.45)); opacity:.95 }
+
+/* ====== CONTENIDO PRINCIPAL (opcional si tienes contenedor a la derecha) ====== */
+#content{
+    flex:1; height:100%; position:relative; z-index:1;
+    padding:22px; overflow:auto;
 }
 
-.menu-button:hover {
-    background-color: #a00000;
-    transform: scale(1.03);
+/* ====== COLAPSADO (agrega .is-collapsed al body o a un wrapper) ====== */
+.is-collapsed #u_barra{ width:84px; padding:14px 8px; }
+.is-collapsed .user-mail{ display:none; }
+.is-collapsed .menu-item{ display:none; }
+.is-collapsed .menu-button, .is-collapsed .reser-button{ padding:12px; height:48px; }
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 900px){
+    #u_barra{ width:220px }
+}
+@media (max-width: 760px){
+#u_barra{
+    position:absolute; left:0; top:0; bottom:0; transform: translateX(0);
+    transition: transform .28s cubic-bezier(.22,1,.36,1);
+}
+    .sidebar--hidden #u_barra{ transform: translateX(-110%); }
+    #content{ padding:16px }
 }
 
-.reser-button {
-    background-color: #800000;
-    color: white;
-    font-weight: bold;
-    margin-bottom: 100px;
-    font-size: 1rem;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-.reser-button:hover {
-    background-color: #a00000;
-    transform: scale(1.03);
-}
-
-.menu-item {
-    color: black;
-    font-weight: bold;
-    font-size: 1.1rem;
-    margin: 0;
-}
-
-.footer-section {
-    padding-bottom: 15px;
-}
-
-.footer-logo {
-    width: 45px;
-    height: auto;
-    opacity: 0.95;
+/* ====== ACCESIBILIDAD / REDUCE MOTION ====== */
+@media (prefers-reduced-motion: reduce){
+  *{ transition:none !important; animation:none !important; }
 }

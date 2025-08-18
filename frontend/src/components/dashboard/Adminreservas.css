@@ -1,0 +1,90 @@
+/* ====== Variables de tema ====== */
+:root{
+    --ur-red:#9d141b;
+    --ur-red-700:#b01820;
+    --bg:#0b0e14;
+    --panel:#111827;
+    --card:#1f2937;
+    --text:#e5e7eb;
+    --muted:#9aa3af;
+    --border:#2a3441;
+    --shadow-soft:0 6px 18px rgba(0,0,0,.22);
+    --radius:18px;
+}
+
+/* ====== Contenedor ====== */
+.admin-reservas{
+    min-height:100vh;
+    padding:32px;
+    background:var(--bg);
+    color:var(--text);
+}
+
+.admin-reservas h2{
+    font-size:1.5rem;
+    font-weight:700;
+    margin-bottom:20px;
+    background:linear-gradient(180deg, rgba(157,20,27,.22), transparent);
+    padding:10px 14px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    display:inline-block;
+}
+
+/* ====== Tabla ====== */
+.admin-reservas table{
+    width:100%;
+    border-collapse:collapse;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow-soft);
+    overflow:hidden;
+}
+
+.admin-reservas thead{
+    background:var(--panel);
+}
+
+.admin-reservas th, 
+.admin-reservas td{
+    padding:14px 16px;
+    text-align:left;
+}
+
+.admin-reservas th{
+    font-size:.9rem;
+    font-weight:600;
+    letter-spacing:.3px;
+    color:#f3f4f6;
+    border-bottom:1px solid var(--border);
+}
+
+.admin-reservas tbody tr{
+    border-bottom:1px solid var(--border);
+    transition:background .2s;
+}
+.admin-reservas tbody tr:nth-child(even){
+    background:rgba(255,255,255,.02);
+}
+.admin-reservas tbody tr:hover{
+    background:rgba(255,255,255,.06);
+}
+
+/* ====== Botón eliminar ====== */
+.admin-reservas button{
+    background:var(--ur-red);
+    color:white;
+    font-weight:600;
+    border:none;
+    border-radius:8px;
+    padding:6px 14px;
+    cursor:pointer;
+    transition:background .2s, transform .06s;
+}
+.admin-reservas button:hover{
+    background:var(--ur-red-700);
+}
+.admin-reservas button:active{
+    transform:translateY(1px);
+}

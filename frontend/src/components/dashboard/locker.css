@@ -1,64 +1,161 @@
-.reservas-container {
-    padding: 30px;
+/* ====== Variables de tema ====== */
+:root{
+--ur-red:#9d141b;
+--ur-red-700:#b01820;
+--ur-red-900:#7d0f15;
+
+--bg:#0b0e14;          /* fondo app (oscuro elegante) */
+--panel:#111827;       /* panel lateral */
+--card:#1f2937;        /* tarjetas / superficies */
+--text:#e5e7eb;        /* texto principal */
+--muted:#9aa3af;       /* texto suave */
+--border:#2a3441;      /* borde sutil */
+
+--ok:#16a34a;          /* disponible */
+--busy:#6b7280;        /* ocupado */
+--warn:#f59e0b;
+
+--r:16px;              /* radius base */
+--shadow:0 10px 30px rgba(0,0,0,.30);
+--shadow-soft:0 6px 18px rgba(0,0,0,.22);
 }
 
-.formulario {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    max-width: 320px;
+/* ====== Reset básico ====== */
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+h1,h2,h3{margin:0 0 8px 0;font-weight:700;letter-spacing:.2px}
+
+/* ====== Layout principal ====== */
+.reservas-container{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;   /* 🔑 apila verticalmente */
+    gap:24px;
+    padding:24px;
 }
 
-.formulario input {
-    padding: 8px;
-    border: 1px solid #aaa;
-    border-radius: 6px;
+.filtros, .formulario{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:24px;
+    padding:18px;
+    box-shadow:var(--shadow-soft);
+    margin-bottom:12px;
 }
 
-.locker-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 70px);
-    gap: 15px;
-    margin: 20px 0;
+.reservas-container > h2{
+    background:linear-gradient(180deg, rgba(157,20,27,.22), transparent);
+    padding:10px 14px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    margin-bottom:6px;
 }
 
-.locker-btn {
-    height: 70px;
-    width: 70px;
-    font-weight: bold;
-    font-size: 14px;
-    border-radius: 10px;
-    border: 2px solid #555;
-    color: white;
-    cursor: pointer;
+/* Campos de formulario */
+.campo{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.campo label, .formulario label{font-size:.92rem;color:#f3f4f6;font-weight:600}
+.campo select,
+.formulario input[type="email"],
+.formulario input[type="datetime-local"]{
+    height:44px; border-radius:12px; padding:0 12px;
+    background:#0f172a; color:var(--text);
+    border:1px solid var(--border);
+    transition: box-shadow .2s, border-color .2s;
+}
+.campo select:focus,
+.formulario input:focus{
+    border-color:var(--ur-red-700);
+    box-shadow:0 0 0 4px rgba(157,20,27,.25);
 }
 
-.disponible {
-    background-color: #66bb6a;
+/* ====== Grilla de lockers ====== */
+.locker-grid{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:24px;
+    padding:18px;
+    box-shadow:var(--shadow);
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+    gap:14px;
+    align-content:start;
+    }
+
+/* Botón de locker */
+.locker-btn{
+    height:64px; border-radius:16px; font-weight:700; letter-spacing:.3px;
+    border:1px solid rgba(255,255,255,.06);
+    background:#0f172a;
+    color:#e5e7eb;
+    cursor:pointer;
+    box-shadow:0 4px 10px rgba(0,0,0,.25);
+    transition: transform .06s ease, box-shadow .2s ease, background .2s, border-color .2s;
+}
+.locker-btn.disponible{
+    background: linear-gradient(180deg, rgba(22,163,74,.22), rgba(22,163,74,.12));
+    border-color: rgba(22,163,74,.45);
+}
+.locker-btn.disponible:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(22,163,74,.25)}
+.locker-btn.seleccionado{
+    background: linear-gradient(180deg, rgba(157,20,27,.35), rgba(157,20,27,.18));
+    border-color: var(--ur-red-700);
+    outline:2px solid rgba(157,20,27,.45);
+    transform:translateY(-1px);
+}
+.locker-btn.ocupado{
+    background:linear-gradient(180deg, rgba(107,114,128,.35), rgba(107,114,128,.18));
+    color:#cbd5e1;
+    border-color:rgba(107,114,128,.55);
+    cursor:not-allowed;
+    opacity:.75;
 }
 
-.seleccionado {
-    background-color: #FFD700;
-    color: black;
+/* CTA: reservar / eliminar */
+.btn-reservar{
+    margin-top:16px;
+    height:46px;
+    padding:0 18px;
+    border-radius:999px;
+    background:var(--ur-red);
+    color:white;
+    font-weight:700;
+    letter-spacing:.2px;
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 10px 24px rgba(157,20,27,.35);
+    cursor:pointer;
+    transition: background .2s, transform .06s ease, box-shadow .2s;
+}
+.btn-reservar:hover{background:var(--ur-red-700)}
+.btn-reservar:active{transform:translateY(1px)}
+.btn-reservar:disabled{opacity:.6;cursor:not-allowed}
+
+/* Si quieres estilo alterno para “Eliminar reservas” */
+button.btn-reservar + .btn-reservar{
+    background:transparent;border:1px solid var(--border);box-shadow:none;color:#f3f4f6}
+button.btn-reservar + .btn-reservar:hover{background:#111827}
+
+/* ====== Mensajes dentro de la grilla ====== */
+.locker-grid p{
+    color:var(--muted);
+    background:#0f172a;
+    border:1px dashed var(--border);
+    border-radius:12px;
+    padding:16px;
 }
 
-.ocupado {
-    background-color: #888;
-    cursor: not-allowed;
+/* ====== Responsive ====== */
+@media (max-width: 1024px){
+    .reservas-container{grid-template-columns: 280px 1fr}
 }
-
-.btn-reservar {
-    padding: 12px 24px;
-    background-color: #800000;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
+@media (max-width: 820px){
+.reservas-container{
+        grid-template-columns: 1fr;
+        padding:16px;
 }
-
-.btn-reservar:hover {
-    background-color: #a00000;
+.filtros, .formulario, .locker-grid{border-radius:18px}
+.locker-grid{grid-template-columns: repeat(auto-fill, minmax(64px, 1fr))}
+}
+@media (max-width: 420px){
+    .locker-grid{grid-template-columns: repeat(4, 1fr)}
+    .locker-btn{height:56px;border-radius:14px}
 }
