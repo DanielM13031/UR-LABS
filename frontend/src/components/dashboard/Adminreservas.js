@@ -38,6 +38,7 @@ const Adminreservas = () => {
                         <th>Casillero</th>
                         <th>Correo</th>
                         <th>Fecha Inicio</th>
+                        <th>Celular</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -47,6 +48,7 @@ const Adminreservas = () => {
                             <td>{r.locker?.numero}</td>
                             <td>{r.userMail}</td>
                             <td>{new Date(r.startTime).toLocaleString()}</td>
+                            <td>{r.tel}</td>
                             <td>
                                 <button onClick={() => handleEliminar(r.id)}>Eliminar</button>
                             </td>
