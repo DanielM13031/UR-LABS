@@ -23,7 +23,7 @@ const Adminreservas = () => {
 
         try {
             await axios.delete(`/reservas/${id}`);
-            fetchReservas(); // Actualizar la lista
+            fetchReservas();
         } catch (err) {
             console.error('Error al eliminar reserva', err);
         }

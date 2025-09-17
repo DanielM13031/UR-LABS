@@ -20,6 +20,10 @@ userMail: {
     type: Sequelize.STRING,
     allowNull: false
 },
+tel: {
+    type: Sequelize.STRING,
+    allowNull: false
+},
 startTime: {
     type: Sequelize.DATE,
     allowNull: false

@@ -89,7 +89,7 @@ app.get('/lockers', async (req, res) => {
 
 
 app.post('/reserve', async (req, res) => {
-    const { lockerId, userMail, startTime} = req.body;
+    const { lockerId, userMail, startTime, tel} = req.body;
     try {
 
         const reservaActiva = await reservations.findOne({ where: {userMail} });
@@ -105,7 +105,8 @@ app.post('/reserve', async (req, res) => {
     const nuevaReserva = await reservations.create({
         lockerId,
         userMail,
-        startTime
+        startTime,
+        tel,
     });
 
     locker.isAvailable = false;

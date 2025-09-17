@@ -12,6 +12,7 @@ const Reservas = () => {
     const [pisos, setPisos] = useState([]);
     const [edificio, setEdificio] = useState('');
     const [piso, setPiso] = useState('');
+    const [Num, setNum] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -52,8 +53,6 @@ const Reservas = () => {
 
         const { data } = await axios.get('/lockers', { params: { edificio, piso: Number(piso) } });
         setLockers(data || []);
-        // debug opcional
-        // console.log('lockers recibidos:', data?.length, data?.slice(0,3));
         } catch (e) {
             console.error('Error al obtener casilleros', e);
         }
@@ -65,20 +64,25 @@ const Reservas = () => {
     };
 
 const handleReserve = async () => {
-    if (!selectedLocker || !userMail || !startTime) {
+    if (!selectedLocker || !userMail || !startTime || !Num) {
         alert('Por favor llenar los campos.');
         return;
     }
     try {
         const startISO = new Date(startTime).toISOString();
-        await axios.post('/reserve', { lockerId: selectedLocker, userMail, startTime: startISO });
+        axios.post('/reserve', {
+        lockerId: selectedLocker,
+        userMail,
+        startTime: startISO,
+        tel: Num   
+    });
 
         alert('Reserva exitosa');
         setSelectedLocker(null);
         setUserMail('');
         setStartTime('');
+        setNum('');
 
-        // 🔁 refresca la misma vista (disponibles + ocupados) con los filtros activos
         const { data } = await axios.get('/lockers', { params: { edificio, piso: Number(piso) } });
         setLockers(data || []);
     } catch (err) {
@@ -144,6 +148,14 @@ return (
             type="datetime-local"
             value={startTime}
             onChange={(e) => setStartTime(e.target.value)}
+        />
+
+        <label>Numero Celular:</label>
+        <input
+            type="tel"
+            value={Num}
+            onChange={(e) => setNum(e.target.value)}
+            placeholder="+57"
         />
         </div>
 
