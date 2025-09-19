@@ -8,27 +8,27 @@ const estudiantes = db.define('estudiantes', {
     primaryKey: true
     },
 
-    Nombres: {
+    nombres: {
     type: Sequelize.STRING,
     allowNull: false,
     unique: true
     },
 
-    Telefono: {
+    telefono: {
     type: Sequelize.STRING,
     allowNull: false,
     unique: true
     },
 
-    Celular: {
+    celular: {
     type: Sequelize.STRING,
     allowNull: false,
     unique: true
     },
 
-    Email: {
+    email: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
     }
 }, {
     tableName: 'estudiantes',

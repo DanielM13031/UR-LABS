@@ -68,23 +68,31 @@ const handleReserve = async () => {
         alert('Por favor llenar los campos.');
         return;
     }
+    const mail = userMail.trim().toLowerCase();
+    if (!mail.endsWith('@urosario.edu.co')) {
+        alert('Use su correo institucional @urosario.edu.co');
+        return;
+    }
+
     try {
         const startISO = new Date(startTime).toISOString();
-        axios.post('/reserve', {
-        lockerId: selectedLocker,
-        userMail,
-        startTime: startISO,
-        tel: Num   
-    });
 
-        alert('Reserva exitosa');
+        const { data } = await axios.post('/reserve', {
+        lockerId: selectedLocker,
+        userMail: mail,
+        startTime: startISO,
+        tel: Num
+        });
+
+        alert(data?.message || 'Reserva exitosa');
+
         setSelectedLocker(null);
         setUserMail('');
         setStartTime('');
         setNum('');
 
-        const { data } = await axios.get('/lockers', { params: { edificio, piso: Number(piso) } });
-        setLockers(data || []);
+        const { data: nuevos } = await axios.get('/lockers', { params: { edificio, piso: Number(piso) } });
+        setLockers(nuevos || []);
     } catch (err) {
         console.error('Error al reservar', err);
         alert(err?.response?.data?.message ?? 'Error al reservar');
@@ -99,7 +107,7 @@ const asBool = (v) => {
     if (typeof v === 'boolean') return v;
     if (typeof v === 'number') return v === 1;
     if (typeof v === 'string') return v.toLowerCase() === 'true' || v === '1';
-    return false; // por defecto
+    return false;
 };
 
 return (

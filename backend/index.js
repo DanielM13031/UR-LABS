@@ -4,6 +4,7 @@ import Sequelize from './config/database.js';
 import users from './models/users.js'
 import lockers from './models/lockers.js';
 import reservations from './models/reservas.js';
+import estudiantes from './models/estudiantes.js'; 
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
 import lockersRouter from './routes/lockers.js';
@@ -89,38 +90,63 @@ app.get('/lockers', async (req, res) => {
 
 
 app.post('/reserve', async (req, res) => {
-    const { lockerId, userMail, startTime, tel} = req.body;
-    try {
+    const { lockerId, userMail, startTime, tel } = req.body;
 
-        const reservaActiva = await reservations.findOne({ where: {userMail} });
-        if(reservaActiva) {
-            return res.status(400).json({ message: 'El usuario ya tiene una reserva'})
+    // Validaciones rápidas de payload (evitan 500 por nulls o tipos)
+    if (!lockerId) return res.status(400).json({ message: 'Falta lockerId' });
+    if (!userMail) return res.status(400).json({ message: 'Falta userMail' });
+    if (!startTime) return res.status(400).json({ message: 'Falta startTime' });
+    if (!tel) return res.status(400).json({ message: 'Falta tel' });
+
+    try {
+        const mail = String(userMail).trim().toLowerCase();
+
+        if (!mail.endsWith('@urosario.edu.co')) {
+        return res.status(400).json({ message: 'El correo debe ser institucional (@urosario.edu.co)' });
+        }
+
+        const existe = await estudiantes.findOne({ where: { email: mail } });
+        if (!existe) {
+        return res.status(400).json({ message: 'El correo no pertenece a estudiantes activos' });
+        }
+
+        const yaTiene = await reservations.findOne({ where: { userMail: mail } });
+        if (yaTiene) {
+        return res.status(400).json({ message: 'El usuario ya tiene una reserva' });
         }
 
         const locker = await lockers.findByPk(lockerId);
-        if (!locker || !locker.isAvailable) {
-        return res.status(400).json({ message: 'El casillero no está disponible o no existe.' });
-    }
+        if (!locker) return res.status(400).json({ message: 'El casillero no existe' });
+        if (!locker.isAvailable) return res.status(400).json({ message: 'El casillero no está disponible' });
 
-    const nuevaReserva = await reservations.create({
+        const startISO = new Date(startTime);
+        if (isNaN(startISO)) {
+        return res.status(400).json({ message: 'Fecha/hora inválida' });
+        }
+
+        const nueva = await reservations.create({
         lockerId,
-        userMail,
-        startTime,
-        tel,
-    });
+        userMail: mail,          
+        startTime: startISO,     
+        tel: String(tel).trim(),
+        });
 
-    locker.isAvailable = false;
-    await locker.save();
+        locker.isAvailable = false;
+        await locker.save();
 
-    return res.status(201).json({
-        message: 'Reserva registrada correctamente',
-        reserva: nuevaReserva
-    });
+        return res.status(201).json({ message: 'Reserva registrada correctamente', reserva: nueva });
     } catch (error) {
-        console.error('Error al registrar la reserva:', error);
-        res.status(500).json({ message: 'Error al registrar la reserva' });
+        console.error('[RESERVE][ERROR]', {
+        message: error?.message,
+        name: error?.name,
+        parent: error?.parent?.message,
+        stack: error?.stack,
+        });
+        return res.status(500).json({ message: 'Error al registrar la reserva' });
     }
 });
+
+
 
 
 app.delete('/reservations/:id', async (req, res) => {
