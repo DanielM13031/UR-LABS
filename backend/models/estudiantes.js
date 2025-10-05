@@ -29,6 +29,12 @@ const estudiantes = db.define('estudiantes', {
     email: {
     type: Sequelize.STRING,
     allowNull: false,
+    },
+
+    carrera: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
     }
 }, {
     tableName: 'estudiantes',

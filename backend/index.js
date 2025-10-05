@@ -124,11 +124,17 @@ app.post('/reserve', async (req, res) => {
         return res.status(400).json({ message: 'Fecha/hora inválida' });
         }
 
+        const carreraestudiante = existe.carrera;
+        if (!carreraestudiante) {
+        return res.status(400).json({ message: 'El estudiante no tiene una carrera asignada' });
+        }
+
         const nueva = await reservations.create({
         lockerId,
         userMail: mail,          
         startTime: startISO,     
         tel: String(tel).trim(),
+        carrera: existe.carrera
         });
 
         locker.isAvailable = false;
@@ -175,11 +181,13 @@ app.delete('/reservations/:id', async (req, res) => {
 app.get('/reservas', async (req, res) => {
     try {
         const reservas = await reservations.findAll({
-            include: [{
-                model: lockers,
-                attributes: ['numero']
-            }],
-            order: [['startTime', 'DESC']]
+        attributes: ['id', 'userMail', 'startTime', 'tel', 'carrera', 'lockerId'],
+        include: [{
+            model: lockers,
+            as: 'locker',                 
+            attributes: ['numero']
+        }],
+        order: [['startTime', 'DESC']]
         });
         res.json(reservas);
     } catch (error) {

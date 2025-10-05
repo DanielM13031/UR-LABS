@@ -27,7 +27,12 @@ tel: {
 startTime: {
     type: Sequelize.DATE,
     allowNull: false
-}
+},
+    carrera: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    field: 'carrera'
+    }
 }, {
     tableName: 'reservations',
     timestamps: false
