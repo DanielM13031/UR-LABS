@@ -72,7 +72,7 @@ app.get('/lockers', async (req, res) => {
         const rows = await lockers.findAll({
             where,
             attributes: ['id', 'numero', 'isAvailable', 'edificio', 'piso'],
-            order: [['numero', 'ASC']]
+        order: [ [sequelize.literal("NULLIF(TRIM(numero),'')::int"), 'ASC'] ]
         });
 
         const data = rows.map(r => {

@@ -82,6 +82,17 @@ h1,h2,h3{margin:0 0 8px 0;font-weight:700;letter-spacing:.2px}
     align-content:start;
     }
 
+    /* ===== Tamaño máximo por edificio ===== */
+.grid-11 {
+    grid-template-columns: repeat(11, 1fr);
+}
+
+.grid-12 {
+    grid-template-columns: repeat(12, 1fr);
+}
+
+
+
 /* Botón de locker */
 .locker-btn{
     height:64px; border-radius:16px; font-weight:700; letter-spacing:.3px;

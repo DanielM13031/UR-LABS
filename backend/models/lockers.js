@@ -9,7 +9,7 @@ const lockers = db.define('lockers', {
     },
 
     numero: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
     allowNull: false,
     unique: true
     },

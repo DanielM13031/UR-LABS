@@ -168,7 +168,14 @@ return (
         </div>
 
         {/* Grilla de lockers filtrados */}
-        <div className="locker-grid">
+        <div   className={`locker-grid ${
+            edificio === 'El Tiempo'
+            ? 'grid-11'
+            : edificio === 'Calatrava (Torre 2)'
+            ? 'grid-12'
+            : ''
+        }`}
+        >
         {lockers.map((locker, i) => {
             const disponible = asBool(locker?.isAvailable);
             return (
