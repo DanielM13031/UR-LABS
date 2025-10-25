@@ -112,7 +112,9 @@ const asBool = (v) => {
 
 return (
     <div className="reservas-container">
+        <img src="/images/logo_urosario.png" alt="logo_reservas" className="footer-logo_re" />
         <h2>Reserva de Casilleros</h2>
+        
 
       {/* Filtros */}
         <div className="filtros">
