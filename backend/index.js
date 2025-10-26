@@ -8,6 +8,8 @@ import estudiantes from './models/estudiantes.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
 import lockersRouter from './routes/lockers.js';
+import adminCutoff from './routes/admincuts.js';
+import './src/jobs/scheduler.js';
 
 const app = express();
 const port  = 5000;
@@ -17,6 +19,7 @@ const port  = 5000;
 app.use(express.json());
 app.use(cors());
 app.use('/lockers', lockersRouter);
+app.use('/admin', adminCutoff);
 //Conexiones de la base de datos
 
 Sequelize.sync({alter:true})
@@ -237,6 +240,9 @@ function checktoken (req,res,next){
     });
 }
 
+//Mails
+// Rutas admin
+app.use('/admin', adminCutoff);
 
 app.get('/Home', checktoken, (req,res)=>{
     res.json({message: 'Ha ingresado'})
