@@ -9,7 +9,7 @@ const app = {
         port: 587,
         secure: false,
         user: 'danieljosemorales05@gmail.com',   
-        pass: 'okrw eede vgmw iazb',
+        pass: 'pssf luvy nbnx mwqm',
         from: 'Reservas Casilleros <danieljosemorales05@gmail.com>'
     }
 };
