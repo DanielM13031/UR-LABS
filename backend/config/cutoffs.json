@@ -1,58 +1,32 @@
 [
   {
-    "name": "2025-2 Fin de semestre",
-    "cutoff_at": "2025-12-15T00:00:00-05:00",
-    "remind_days_before": 7,
+    "cutoff_at": "2025-11-30",
+    "remind_days_before": 3,
     "grace_days": 2,
     "is_active": false
   },
   {
-    "name": "2025-2 Fin de semestre",
-    "cutoff_at": "2025-11-05T23:14:00.000Z",
-    "remind_days_before": 7,
+    "name": "Fin de semestre",
+    "cutoff_at": "2025-11-06",
+    "remind_days_before": 0,
     "grace_days": 2,
-    "is_active": false
+    "is_active": false,
+    "saved_at": "2025-11-07T02:53:10.421Z"
   },
   {
-    "name": "2025-2 Fin de semestre",
-    "cutoff_at": "2025-11-05T18:14:00.000Z",
-    "remind_days_before": 7,
-    "grace_days": 6,
-    "is_active": false
+    "name": "Fin de semestre",
+    "cutoff_at": "2025-11-07",
+    "remind_days_before": 0,
+    "grace_days": 0,
+    "is_active": false,
+    "saved_at": "2025-11-07T02:57:51.473Z"
   },
   {
-    "name": "2025-2 Fin de semestre",
-    "cutoff_at": "2025-11-05T18:14:00.000Z",
-    "remind_days_before": 7,
-    "grace_days": 6,
-    "is_active": false
-  },
-  {
-    "name": "2025-2 Fin de semestre",
-    "cutoff_at": "2025-11-05T18:14:00.000Z",
-    "remind_days_before": 7,
-    "grace_days": 6,
-    "is_active": false
-  },
-  {
-    "name": "2025-2 Fin de semestre",
-    "cutoff_at": "2025-11-05T18:14:00.000Z",
-    "remind_days_before": 7,
-    "grace_days": 6,
-    "is_active": false
-  },
-  {
-    "name": "2025-2 Fin de semestre",
-    "cutoff_at": "2025-11-05T18:14:00.000Z",
-    "remind_days_before": 7,
-    "grace_days": 6,
-    "is_active": false
-  },
-  {
-    "name": "2025-2 Fin de semestre",
-    "cutoff_at": "2025-11-06T13:00:00.000Z",
-    "remind_days_before": 7,
-    "grace_days": 7,
-    "is_active": true
+    "name": "Fin de semestre",
+    "cutoff_at": "2025-11-06",
+    "remind_days_before": 0,
+    "grace_days": 0,
+    "is_active": true,
+    "saved_at": "2025-11-07T02:59:02.338Z"
   }
 ]

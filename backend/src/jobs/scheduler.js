@@ -1,19 +1,34 @@
 import cron from 'node-cron';
-import { app } from '../lib/config.js';
+import app from '../../config/app.js';
 import { runReminderJob, runCutoffJob } from './cutService.js';
 
-if (app.isScheduler) {
-    cron.schedule('0 8 * * *', async () => {
-        try { console.log('[ReminderJob]', await runReminderJob()); }
-        catch (e) { console.error('[ReminderJob][ERROR]', e); }
-    }, { timezone: app.timezone });
+// Programa diario a las 08:00 el recordatorio (si toca ese día)
+const REMINDER_CRON = '0 8 * * *';
 
-    cron.schedule('0 * * * *', async () => {
-        try { console.log('[CutoffJob]', await runCutoffJob()); }
-        catch (e) { console.error('[CutoffJob][ERROR]', e); }
-    }, { timezone: app.timezone });
+// Programa un chequeo cada hora del día por si "hoy" es el corte efectivo
+// (si prefieres solo una vez, cámbialo a '10 0 * * *' por ejemplo)
+const CUTOFF_CHECK_CRON = '0 * * * *';
 
-    console.log(`[Scheduler] Activado. TZ=${app.timezone}`);
+if (app?.isScheduler) {
+    cron.schedule(REMINDER_CRON, async () => {
+    try {
+        const res = await runReminderJob();
+        console.log('[ReminderJob]', res);
+    } catch (e) {
+        console.error('[ReminderJob][ERROR]', e);
+    }
+    }, { timezone: app.timezone || 'America/Bogota' });
+
+    cron.schedule(CUTOFF_CHECK_CRON, async () => {
+        try {
+            const res = await runCutoffJob();
+            console.log('[CutoffJob]', res);
+        } catch (e) {
+        console.error('[CutoffJob][ERROR]', e);
+        }
+    }, { timezone: app.timezone || 'America/Bogota' });
+
+    console.log(`[Scheduler] Activado. TZ=${app.timezone || 'America/Bogota'}`);
 } else {
     console.log('[Scheduler] Desactivado en esta máquina.');
 }
