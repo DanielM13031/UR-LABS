@@ -1,6 +1,7 @@
 import './Home.css';
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import Metrics from './Metrics.jsx';
 
 const Home = () => {
     const [profileimg, setProfileimg] = useState('');
@@ -48,6 +49,10 @@ const goToReser = () => {
             <img src="/images/logo_footer_h.png" alt="logo" className="footer-logo" />
         </div>
         </div>
+        <div id="home-metrics">
+            <Metrics/>
+        </div>
+        
     </div>
     );
 };

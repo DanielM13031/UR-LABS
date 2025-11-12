@@ -9,6 +9,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
 import lockersRouter from './routes/lockers.js';
 import adminCutoff from './routes/admincuts.js';
+import metricsRouter from './routes/metrics.js';
 import './src/jobs/scheduler.js';
 
 const app = express();
@@ -248,6 +249,9 @@ app.get('/Home', checktoken, (req,res)=>{
     res.json({message: 'Ha ingresado'})
 });
 
+
+// Rutas metrics
+app.use('/metrics', metricsRouter);
 
 //init server
 app.listen(port, () =>{
