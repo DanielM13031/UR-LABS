@@ -253,6 +253,11 @@ app.get('/Home', checktoken, (req,res)=>{
 // Rutas metrics
 app.use('/metrics', metricsRouter);
 
+
+// Ruta import estudiantes
+import importEstudiantesRouter from './routes/import_estudiantes.js';
+app.use('/import', importEstudiantesRouter);
+
 //init server
 app.listen(port, () =>{
     console.log(`running on ${port}`)

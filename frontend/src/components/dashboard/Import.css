@@ -1,0 +1,118 @@
+.upload-card {
+    background: #0f1115;
+    border-radius: 18px;
+    padding: 18px 20px;
+    border: 1px solid #1f2933;
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.45);
+    color: #e5e7eb;
+    min-width: 320px;
+    max-width: 380px;
+    height: fit-content;
+}
+
+/* Título y subtítulo */
+.upload-header h3 {
+    margin: 0 0 4px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.upload-header p {
+    margin: 0 0 16px;
+    font-size: 0.85rem;
+    color: #9ca3af;
+}
+
+/* Controles */
+.upload-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Botón para abrir el selector de archivos */
+.upload-file-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 10px;
+    border-radius: 999px;
+    background: #111827;
+    border: 1px dashed #4b5563;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    }
+
+.upload-file-label:hover {
+    border-color: #f87171;
+    background: #181c27;
+}
+
+/* Nombre del archivo */
+.upload-file-name {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Botón de importar */
+.upload-button {
+    margin-top: 6px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    background: linear-gradient(135deg, #b91c1c, #ef4444);
+    color: #f9fafb;
+    box-shadow: 0 10px 25px rgba(220, 38, 38, 0.35);
+    transition: transform 0.1s ease, box-shadow 0.1s ease, opacity 0.1s ease;
+}
+
+.upload-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 30px rgba(220, 38, 38, 0.45);
+}
+
+.upload-button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Resultado */
+.upload-result {
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
+
+.upload-result.ok {
+    background: rgba(16, 185, 129, 0.07);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.upload-result.error {
+    background: rgba(248, 113, 113, 0.07);
+    border: 1px solid rgba(248, 113, 113, 0.35);
+}
+
+.upload-result-msg {
+    margin: 0 0 6px;
+    font-weight: 500;
+}
+
+.upload-result ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.upload-result li {
+    margin: 1px 0;
+}

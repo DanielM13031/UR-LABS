@@ -2,6 +2,7 @@ import './Home.css';
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Metrics from './Metrics.jsx';
+import Import from './Import.jsx';
 
 const Home = () => {
     const [profileimg, setProfileimg] = useState('');
@@ -52,6 +53,11 @@ const goToReser = () => {
         <div id="home-metrics">
             <Metrics/>
         </div>
+
+        <div id="home-import">
+            <Import/>
+        </div>
+
         
     </div>
     );
