@@ -28,7 +28,23 @@
     "cutoff_at": "2025-11-28",
     "remind_days_before": 8,
     "grace_days": 0,
-    "is_active": true,
+    "is_active": false,
     "saved_at": "2025-11-20T16:11:41.917Z"
+  },
+  {
+    "name": "Fin de semestre",
+    "cutoff_at": "2025-11-28",
+    "remind_days_before": 2,
+    "grace_days": 0,
+    "is_active": false,
+    "saved_at": "2025-11-26T17:41:55.485Z"
+  },
+  {
+    "name": "Fin de semestre",
+    "cutoff_at": "2025-11-26",
+    "remind_days_before": 0,
+    "grace_days": 0,
+    "is_active": true,
+    "saved_at": "2025-11-26T17:42:42.295Z"
   }
 ]

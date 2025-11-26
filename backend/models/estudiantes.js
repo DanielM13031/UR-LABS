@@ -34,7 +34,7 @@ const estudiantes = db.define('estudiantes', {
     carrera: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: true
+    unique: false
     }
 }, {
     tableName: 'estudiantes',

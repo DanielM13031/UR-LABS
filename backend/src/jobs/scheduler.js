@@ -2,11 +2,8 @@ import cron from 'node-cron';
 import app from '../../config/app.js';
 import { runReminderJob, runCutoffJob } from './cutService.js';
 
-// Programa diario a las 08:00 el recordatorio (si toca ese día)
 const REMINDER_CRON = '0 8 * * *';
 
-// Programa un chequeo cada hora del día por si "hoy" es el corte efectivo
-// (si prefieres solo una vez, cámbialo a '10 0 * * *' por ejemplo)
 const CUTOFF_CHECK_CRON = '0 * * * *';
 
 if (app?.isScheduler) {

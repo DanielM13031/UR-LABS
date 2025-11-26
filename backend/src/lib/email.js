@@ -1,6 +1,6 @@
 // src/lib/email.js
 import nodemailer from 'nodemailer';
-import app from '../../config/app.js'; // <-- tu app.js
+import app from '../../config/app.js'; 
 
 let transporter;
 let verified = false;
@@ -16,12 +16,12 @@ function buildTransporter() {
     transporter = nodemailer.createTransport({
         host,
         port: Number(port),
-        secure: Boolean(secure),      // true->465 (SSL), false->587 (STARTTLS)
+        secure: Boolean(secure),      
         auth: { user, pass },
-        requireTLS: !secure,          // STARTTLS en 587
-        logger: true,                 // logs útiles
+        requireTLS: !secure,          
+        logger: true,                 
         debug: true,
-        pool: true,                   // pool SMTP (mejor si envías varios)
+        pool: true,                   
         maxConnections: 3,
         maxMessages: 50
     });

@@ -1,13 +1,10 @@
-// routes/admin.js (por ejemplo)
 import express from 'express';
 import multer from 'multer';
 import csv from 'csv-parser';
 import fs from 'fs';
-import Estudiante  from '../models/estudiantes.js';
+import Estudiante from '../models/estudiantes.js';
 
 const router = express.Router();
-
-// almacenamiento temporal en /uploads
 const upload = multer({ dest: 'uploads/' });
 
 router.post('/estudiantes/import', upload.single('file'), async (req, res) => {
@@ -19,50 +16,54 @@ router.post('/estudiantes/import', upload.single('file'), async (req, res) => {
     const resultados = [];
 
     try {
-    // Leer CSV
-    await new Promise((resolve, reject) => {
-        fs.createReadStream(filePath)
-            .pipe(csv({ separator: ',', mapHeaders: ({ header }) => header.trim() }))
-            .on('data', (row) => resultados.push(row))
-            .on('end', resolve)
-            .on('error', reject);
-    });
-
-    let insertados = 0;
-    let yaExistian = 0;
-
-    // Suponiendo que tu CSV tiene columnas: codigo, nombre, correo
-    for (const row of resultados) {
-        const codigo = row.codigo?.trim();
-        const nombre = row.nombre?.trim();
-        const correo = row.correo?.trim();
-
-        if (!codigo) continue; // sin clave, saltamos
-
-        // Busca por código (ajusta según tu modelo)
-        const [estudiante, creado] = await Estudiante.findOrCreate({
-            where: { codigo },
-            defaults: { nombre, correo }
+        // Leer CSV
+        await new Promise((resolve, reject) => {
+            fs.createReadStream(filePath)
+                .pipe(csv({
+                    separator: ',',
+                    mapHeaders: ({ header }) => header.trim().toLowerCase()
+                }))
+                .on('data', (row) => resultados.push(row))
+                .on('end', resolve)
+                .on('error', reject);
         });
 
-        if (creado) insertados++;
-        else yaExistian++;
+        let insertados = 0;
+        let yaExistian = 0;
+
+        for (const row of resultados) {
+
+            const nombres = row.nombres?.trim();
+            const telefono = row.telefono?.trim();
+            const celular = row.celular?.trim();
+            const email = row.email?.trim();
+            const carrera = row.carrera?.trim();
+
+            // Si faltan datos esenciales, lo ignoramos
+            if (!nombres || !email) continue;
+
+            // buscar por email (lo más lógico)
+            const [estudiante, creado] = await Estudiante.findOrCreate({
+                where: { email },
+                defaults: { nombres, telefono, celular, carrera }
+            });
+
+            if (creado) insertados++;
+            else yaExistian++;
         }
 
-        // Borrar archivo temporal
         fs.unlinkSync(filePath);
 
         return res.json({
-        ok: true,
-        msg: 'Importación completada',
-        insertados,
-        yaExistian,
-        totalCSV: resultados.length
+            ok: true,
+            msg: 'Importación completada',
+            insertados,
+            yaExistian,
+            totalCSV: resultados.length
         });
 
     } catch (err) {
         console.error(err);
-        // limpiar archivo si falla
         try { fs.unlinkSync(filePath); } catch (_) {}
         return res.status(500).json({ ok: false, msg: 'Error procesando el archivo' });
     }

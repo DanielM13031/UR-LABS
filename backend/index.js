@@ -38,13 +38,13 @@ app.post('/Login',async (req,res) => {
     const {mail, password} = req.body;
 
     try {
-        const user = await users.findOne({where:{mail} });// buscar usuario
+        const user = await users.findOne({where:{mail} });
 
         if(!user){
             return res.status(401).json({message: 'Usuario no encontrado'})
         }
 
-        const isMatch = await bcrypt.compare(password, user.password); //comparacion de la contraseña con la contraseña encryptada
+        const isMatch = await bcrypt.compare(password, user.password); 
 
         if(isMatch){
             const payload = {
@@ -82,7 +82,7 @@ app.get('/lockers', async (req, res) => {
 
         const data = rows.map(r => {
             const j = r.toJSON();
-            j.isAvailable = !!j.isAvailable; // normaliza booleano
+            j.isAvailable = !!j.isAvailable; 
             return j;
         });
 

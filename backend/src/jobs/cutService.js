@@ -1,6 +1,6 @@
 import reservas from '../../models/reservas.js';
 import lockers from '../../models/lockers.js';
-import db from '../../config/database.js'; // ✅ IMPORTA LA INSTANCIA DE SEQUELIZE
+import db from '../../config/database.js'; 
 import { sendMail } from '../lib/email.js';
 import {
 	loadCutoffs,
@@ -35,22 +35,45 @@ export async function runReminderJob() {
 				model: lockers,
 				as: 'locker',
 				attributes: ['id', 'numero', 'isAvailable'],
-				where: { isAvailable: false } // ✅ FILTRO EN LOCKERS
+				where: { isAvailable: false } 
 			}]
 		});
 		let sent = 0;
 		for (const r of rows) {
-			const subject = `Recordatorio: tu reserva vence el ${due.toLocaleDateString('es-CO')}`;
+			const subject = `Recordatorio: tu reserva de casillero vence el ${due.toLocaleDateString('es-CO')}`;
+
 			const html = `
-				<div style="font-family:Segoe UI,Arial,sans-serif;line-height:1.5;">
-					<h2 style="margin:0 0 8px;color:#9d141b;">Reserva de Casilleros</h2>
+				<div style="font-family:Segoe UI,Arial,sans-serif;line-height:1.6;color:#333;">
+					<h2 style="margin:0 0 10px;color:#9d141b;">Recordatorio de Reserva – Casilleros UR</h2>
+
 					<p>Hola,</p>
-					<p>Tu reserva del casillero <b>${r?.locker?.numero ?? r.lockerId}</b>
-					vence el <b>${due.toLocaleDateString('es-CO')}</b>.</p>
-				</div>`;
+
+					<p>
+						Te informamos que tu reserva del casillero 
+						<b>${r?.locker?.numero ?? r.lockerId}</b> 
+						vence el día <b>${due.toLocaleDateString('es-CO')}</b>.
+					</p>
+
+					<p>
+						Por favor asegúrate de realizar la entrega o renovación correspondiente antes de la fecha indicada
+						para evitar inconvenientes.
+					</p>
+
+					<p style="margin-top:18px;">
+						Si ya realizaste la gestión, puedes ignorar este mensaje.
+					</p>
+
+					<p style="margin-top:12px;">
+						Atentamente,<br>
+						<b>UR-Labs – Sistema de Reservas de Casilleros</b>
+					</p>
+				</div>
+			`;
+
 			if (await sendSafe({ to: r.userMail, subject, html })) sent++;
 		}
-		return { ok: true, phase: 'pre-due', remindersSent: sent, due: due.toISOString().slice(0, 10) };
+
+		return { ok: true, phase: "pre-due", remindersSent: sent, due: due.toISOString().slice(0, 10) };
 	}
 
 	// 2) Aviso durante días de gracia (si hay gracia > 0)
@@ -61,7 +84,7 @@ export async function runReminderJob() {
 				model: lockers,
 				as: 'locker',
 				attributes: ['numero', 'isAvailable'],
-				where: { isAvailable: false } // ✅ coherente: solo los ocupados
+				where: { isAvailable: false } 
 			}]
 		});
 
@@ -105,7 +128,7 @@ export async function runCutoffJob() {
 			model: lockers,
 			as: 'locker',
 			attributes: ['id', 'numero', 'isAvailable'],
-			where: { isAvailable: false } // ✅ AQUÍ ESTABA EL BUG: no va en reservations
+			where: { isAvailable: false } 
 		}]
 	});
 
@@ -126,19 +149,36 @@ export async function runCutoffJob() {
 		);
 		let freed = aff1;
 
-		// 2) Correos post-corte (opcional)
 		let mailed = 0;
 		for (const r of rows) {
 			const subject = `Corte aplicado – ${effStr}`;
+
 			const html = `
-				<div style="font-family:Segoe UI,Arial,sans-serif;line-height:1.5;">
-					<h2 style="margin:0 0 8px;color:#9d141b;">Reserva de Casilleros</h2>
+				<div style="font-family:Segoe UI,Arial,sans-serif;line-height:1.6;color:#333;">
+					<h2 style="margin:0 0 10px;color:#9d141b;">Reserva de Casilleros – Corte Aplicado</h2>
+
 					<p>Hola,</p>
-					<p>Se ejecutó el corte del día <b>${effStr}</b>. Tu reserva del casillero
-					<b>${r?.locker?.numero ?? r.lockerId}</b> fue finalizada y el casillero ha sido liberado.</p>
-				</div>`;
+
+					<p>
+						Te informamos que el corte correspondiente al día <b>${effStr}</b> ha sido ejecutado.  
+						Tu reserva del casillero <b>${r?.locker?.numero ?? r.lockerId}</b> ha finalizado y el 
+						casillero fue liberado para nuevos usuarios, cualquier objeto que se encuentre en el casillero sera llevado a objetos perdidos.
+					</p>
+
+					<p style="margin-top:16px;">
+						Si necesitas realizar una nueva reserva, puedes hacerlo a través del sistema de UR-Labs.
+					</p>
+
+					<p style="margin-top:14px;">
+						Atentamente,<br>
+						<b>UR-Labs – Sistema de Reservas de Casilleros</b>
+					</p>
+				</div>
+			`;
+
 			if (await sendSafe({ to: r.userMail, subject, html })) mailed++;
 		}
+
 
 		// 3) Borrar reservas
 		const expiredDeleted = await reservas.destroy({
