@@ -11,6 +11,7 @@ import lockersRouter from './routes/lockers.js';
 import adminCutoff from './routes/admincuts.js';
 import metricsRouter from './routes/metrics.js';
 import './src/jobs/scheduler.js';
+import {Op} from 'sequelize';
 
 const app = express();
 const port  = 5000;
@@ -240,6 +241,32 @@ function checktoken (req,res,next){
         next();
     });
 }
+
+
+app.get('/estudiantes/sugerencias', async (req, res) => {
+    try {
+        const { q } = req.query;
+
+        if (!q || q.trim().length < 2) {
+            return res.json([]);
+        }
+
+        const query = q.trim().toLowerCase();
+
+        const resultados = await estudiantes.findAll({
+            where: {
+                email: { [Op.iLike]: `%${query}%` }
+            },
+            attributes: ['email'],
+            limit: 5
+        });
+
+        res.json(resultados);
+    } catch (error) {
+        console.error('[SUGERENCIAS EMAIL][ERROR]', error);
+        res.status(500).json({ message: 'Error buscando correos' });
+    }
+});
 
 //Mails
 // Rutas admin

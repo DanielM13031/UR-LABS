@@ -248,6 +248,85 @@ button.btn-reservar + .btn-reservar:hover{background:#111827}
     border-radius: 12px;
 }
 
+
+/* ------- AUTOCOMPLETE -------- */
+
+.campo-mail {
+    position: relative;
+    width: 100%;
+}
+
+.input-mail-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.mail-suggestions-card {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+
+    background: #111827; /* Fondo oscuro elegante */
+    border: 1px solid #374151; 
+    border-radius: 10px;
+
+    box-shadow: 0 8px 14px rgba(0, 0, 0, 0.35);
+
+    max-height: 220px;
+    overflow-y: auto;
+
+    z-index: 50;
+    padding: 4px 0;
+}
+
+/* Cada ítem de sugerencia */
+.mail-suggestion-item {
+    width: 100%;
+    text-align: left;
+    padding: 10px 12px;
+
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    color: #e5e7eb; /* texto gris suave */
+    font-size: 0.85rem;
+
+    transition: background 0.15s ease;
+}
+
+/* Hover */
+.mail-suggestion-item:hover {
+    background: #1f2937; /* gris oscuro */
+}
+
+/* Estado deshabilitado (Sin resultados o Buscando) */
+.mail-suggestion-item.disabled {
+    cursor: default;
+    color: #6b7280;
+    background: transparent;
+}
+
+.mail-suggestion-item.disabled:hover {
+    background: transparent;
+}
+
+/* Scroll estilizado */
+.mail-suggestions-card::-webkit-scrollbar {
+    width: 6px;
+}
+
+.mail-suggestions-card::-webkit-scrollbar-thumb {
+    background: #4b5563;
+    border-radius: 6px;
+}
+
+.mail-suggestions-card::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
+}
+
+
 /* Ajustes responsive */
 @media (max-width: 980px) {
     .kpi-grid {

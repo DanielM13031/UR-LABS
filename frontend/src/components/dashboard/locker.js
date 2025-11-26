@@ -15,6 +15,10 @@ const Reservas = () => {
     const [Num, setNum] = useState('');
     const navigate = useNavigate();
 
+    const [mailSuggestions, setMailSuggestions] = useState([]);
+    const [showMailSuggestions, setShowMailSuggestions] = useState(false);
+    const [loadingMail, setLoadingMail] = useState(false);
+
     useEffect(() => {
     (async () => {
         try {
@@ -44,6 +48,32 @@ const Reservas = () => {
     })();
     }, [edificio]);
 
+    useEffect(() => {
+        const query = userMail.trim().toLowerCase();
+
+        if (!query || query.length < 2) {
+            setMailSuggestions([]);
+            setShowMailSuggestions(false);
+            return;
+        }
+
+        const timeoutId = setTimeout(async () => {
+            try {
+                setLoadingMail(true);
+                const { data } = await axios.get('/estudiantes/sugerencias', {
+                    params: { q: query }
+                });
+                setMailSuggestions(data || []);
+                setShowMailSuggestions((data || []).length > 0);
+            } catch (e) {
+                console.error('Error buscando correos', e);
+            } finally {
+                setLoadingMail(false);
+            }
+        }, 300); // 300ms de debounce
+
+        return () => clearTimeout(timeoutId);
+    }, [userMail]);
 
     useEffect(() => {
     (async () => {
@@ -61,6 +91,11 @@ const Reservas = () => {
 
     const handleSelect = (lockerId) => {
         setSelectedLocker (lockerId === selectedLocker ? null : lockerId);
+    };
+
+    const handleMailSelect = (email) => {
+        setUserMail(email);
+        setShowMailSuggestions(false);
     };
 
 const handleReserve = async () => {
@@ -145,13 +180,49 @@ return (
 
       {/* Form datos de reserva */}
         <div className="formulario">
-        <label>Correo institucional:</label>
-        <input
-            type="email"
-            value={userMail}
-            onChange={(e) => setUserMail(e.target.value)}
-            placeholder="usuario@urosario.edu.co"
-        />
+            <div className="campo campo-mail">
+                <label>Correo institucional:</label>
+                <div
+                    className="input-mail-wrapper"
+                    onBlur={() => setTimeout(() => setShowMailSuggestions(false), 120)}
+                    onFocus={() => mailSuggestions.length > 0 && setShowMailSuggestions(true)}
+                >
+                    <input
+                        type="email"
+                        value={userMail}
+                        onChange={(e) => setUserMail(e.target.value)}
+                        placeholder="usuario@urosario.edu.co"
+                        autoComplete="off"
+                    />
+
+                    {showMailSuggestions && (
+                        <div className="mail-suggestions-card">
+                            {loadingMail && (
+                                <div className="mail-suggestion-item disabled">
+                                    Buscando...
+                                </div>
+                            )}
+
+                            {!loadingMail && mailSuggestions.map((item) => (
+                                <button
+                                    key={item.email}
+                                    type="button"
+                                    className="mail-suggestion-item"
+                                    onMouseDown={() => handleMailSelect(item.email)}
+                                >
+                                    {item.email}
+                                </button>
+                            ))}
+
+                            {!loadingMail && mailSuggestions.length === 0 && (
+                                <div className="mail-suggestion-item disabled">
+                                    Sin resultados
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+            </div>
 
         <label>Fecha y hora de inicio:</label>
         <input
