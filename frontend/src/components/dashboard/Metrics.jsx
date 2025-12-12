@@ -89,11 +89,61 @@ export default function Metrics() {
     );
 
 
+    const exportMetricsCSV = () => {
+        try {
+            const lines = [];
+
+            lines.push('Resumen general');
+            lines.push('Total casilleros;Ocupados;Libres;Tasa ocupación (%)');
+            lines.push(
+                `${summary.totalLockers};${summary.ocupados};${summary.libres};${summary.tasa}`
+            );
+            lines.push('');
+
+            // Sección reservas por carrera
+            lines.push('Reservas por carrera');
+            lines.push('Carrera;Reservas');
+
+            barData.forEach(row => {
+                const carrera = (row.carreraFull || '').replace(/"/g, '""');
+                lines.push(`"${carrera}";${row.reservas}`);
+            });
+
+            const csvString = lines.join('\n');
+            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute(
+                'download',
+                `metricas_labs_ur_${new Date().toISOString().slice(0, 10)}.csv`
+            );
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        } catch (e) {
+            console.error('[ExportMetrics][ERROR]', e);
+            alert('Ocurrió un error al exportar las métricas.');
+        }
+    };
+
     if (loading) return <div className="metrics-loading">Cargando métricas…</div>;
     if (error) return <div className="metrics-error">{error}</div>;
 
     return (
         <div className="metrics-grid">
+
+            {/* Toolbar + botón de exportar */}
+            <div className="metrics-toolbar">
+                <h2 className="metrics-title">Métricas de casilleros</h2>
+                <button className="btn-export-metrics" onClick={exportMetricsCSV}>
+                    Exportar métricas (CSV)
+                </button>
+            </div>
+
+
         {/* KPIs */}
         <div className="kpi-grid">
             <KPI title="Casilleros ocupados" value={summary.ocupados} />

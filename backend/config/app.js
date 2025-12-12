@@ -8,9 +8,9 @@ const app = {
         host: 'smtp.gmail.com',      
         port: 587,
         secure: false,
-        user: 'danieljosemorales05@gmail.com',   
-        pass: 'pssf luvy nbnx mwqm',
-        from: 'Reservas Casilleros <danieljosemorales05@gmail.com>'
+        user: 'laboratorioseci6@gmail.com',   
+        pass: 'akbr nusy zcxr ecaa',
+        from: 'Reservas Casilleros <laboratorioseci6@gmail.com>'
     }
 };
 

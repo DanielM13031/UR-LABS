@@ -1,6 +1,6 @@
 import Sequelize from "sequelize";
 
-const sequelize = new Sequelize('proyecto_labs', 'postgres', '13031',{
+const sequelize = new Sequelize('proyecto_labs', 'postgres', 'laboratorioseci',{
     host: 'localhost',
     dialect: 'postgres'
 });
@@ -13,4 +13,4 @@ sequelize.authenticate()
     console.error('Error de conexión:', err);
     });
 
-export default sequelize;
+export default sequelize;
